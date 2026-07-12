@@ -9,7 +9,8 @@ const io = new Server(server, {
     cors: {
         origin: [
             "http://localhost:5173",
-            "https://mer-nchat.vercel.app"
+            "https://mer-nchat.vercel.app",
+            "https://mernchat-flax.vercel.app"
         ],
         credentials: true,
     },

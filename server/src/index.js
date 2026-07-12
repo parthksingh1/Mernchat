@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from 'url';
+import fs from "fs";
 
 import { connectDB } from "./lib/db.js";
 
@@ -35,14 +36,19 @@ app.use(
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
-// Serve frontend in production
+// Serve frontend in production if built locally, else serve API status
 if (process.env.NODE_ENV === "production") {
-    app.use(express.static(path.join(__dirname, "../../client/dist")));
-
-    // Catch-all route - MUST be AFTER API routes
-    app.get("*", (req, res) => {
-        res.sendFile(path.join(__dirname, "../../client/dist", "index.html"));
-    });
+    const clientDistPath = path.join(__dirname, "../../client/dist");
+    if (fs.existsSync(clientDistPath)) {
+        app.use(express.static(clientDistPath));
+        app.get("*", (req, res) => {
+            res.sendFile(path.join(clientDistPath, "index.html"));
+        });
+    } else {
+        app.get("/", (req, res) => {
+            res.json({ message: "MERN Chat API Server is running successfully." });
+        });
+    }
 }
 
 server.listen(PORT, () => {

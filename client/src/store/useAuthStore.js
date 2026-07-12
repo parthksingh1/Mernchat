@@ -100,6 +100,7 @@ export const useAuthStore = create((set, get) => ({
                 userId: authUser._id,
             },
             transports: ["websocket"],
+            forceNew: true,
         });
         socket.connect();
 
@@ -111,5 +112,6 @@ export const useAuthStore = create((set, get) => ({
     },
     disconnectSocket: () => {
         if (get().socket?.connected) get().socket.disconnect();
+        set({ socket: null });
     },
 }));

@@ -1,0 +1,19 @@
+{
+  "name": "mern-chat-app",
+  "version": "1.0.0",
+  "description": "MERN Stack Real-time Chat Application",
+  "scripts": {
+    "start:server": "npm start --prefix server",
+    "dev:server": "npm run dev --prefix server",
+    "dev:client": "npm run dev --prefix client",
+    "build:client": "npm run build --prefix client",
+    "install:all": "npm install && npm install --prefix server && npm install --prefix client",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\""
+  },
+  "keywords": [],
+  "author": "Parth Kumar Singh",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.0.0"
+  }
+}
